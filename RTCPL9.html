@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Realive Transport & Cargo Pvt Ltd (RTCPL)</title>
+
+<!-- BOOTSTRAP -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ICONS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<!-- AOS Animation -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<style>
+body {font-family: Arial, sans-serif; scroll-behavior:smooth;}
+.navbar{background:#033e8c;}
+.nav-link, .navbar-brand{color:#fff!important;font-weight:600;}
+.nav-link:hover{color:#ffdd33!important;}
+header{margin-top:60px;}
+.text-shadow{ text-shadow:3px 3px 15px #000; }
+.carousel-caption{background:rgba(0,0,0,0.45);padding:18px;border-radius:6px;}
+.section-title{text-align:center;font-size:30px;font-weight:700;color:#033e8c;margin-bottom:25px;}
+
+#services .card{transition:.3s;border:none;box-shadow:0 0 10px rgba(0,0,0,0.15);}
+#services .card:hover{transform:translateY(-8px);}
+
+#fleet img{height:200px;object-fit:cover;border-radius:6px;}
+
+.stats-box{text-align:center;padding:30px;background:#033e8c;color:#fff;border-radius:8px;}
+.stats-number{font-size:35px;font-weight:800;}
+
+.contact-section{background:#f4f7ff;padding:50px;}
+.footer{background:#022a5d;color:#fff;padding:20px;text-align:center;margin-top:30px;}
+
+.whatsapp-float{
+ position:fixed;bottom:20px;right:20px;background:#25D366;color:#fff;
+ width:55px;height:55px;border-radius:50%;display:flex;
+ align-items:center;justify-content:center;font-size:28px;
+ box-shadow:0 0 10px rgba(0,0,0,0.4);z-index:999;cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg fixed-top">
+<div class="container">
+<a class="navbar-brand">RTCPL LOGISTICS</a>
+<button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="nav">
+<ul class="navbar-nav ms-auto">
+<li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+<li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+<li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+<li class="nav-item"><a class="nav-link" href="#fleet">Fleet</a></li>
+<li class="nav-item"><a class="nav-link" href="#tracking">Tracking</a></li>
+<li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+</ul>
+</div>
+</div>
+</nav>
+
+<!-- HERO SLIDER -->
+<header>
+<div id="truckSlider" class="carousel slide" data-bs-ride="carousel">
+<div class="carousel-indicators">
+<button data-bs-target="#truckSlider" data-bs-slide-to="0" class="active"></button>
+<button data-bs-target="#truckSlider" data-bs-slide-to="1"></button>
+<button data-bs-target="#truckSlider" data-bs-slide-to="2"></button>
+</div>
+
+<div class="carousel-inner">
+
+<div class="carousel-item active">
+<img src="https://images.pexels.com/photos/2199293/pexels-photo-2199293.jpeg?w=1400" class="w-100" style="height:480px;object-fit:cover;">
+<div class="carousel-caption">
+<h2 class="text-shadow">India’s Reliable Truck Transport Partner</h2>
+<p>Fast • Secure • On-Time Deliveries</p>
+<a href="#contact" class="btn btn-warning px-4">Connect Now</a>
+</div>
+</div>
+
+<div class="carousel-item">
+<img src="https://images.pexels.com/photos/97544/pexels-photo-97544.jpeg?w=1400" class="w-100" style="height:480px;object-fit:cover;">
+<div class="carousel-caption">
+<h2 class="text-shadow">GPS Enabled Fleet & Live Tracking</h2>
+<p>Transparency & Updates till Delivery</p>
+<a href="#tracking" class="btn btn-warning px-4">Track Shipment</a>
+</div>
+</div>
+
+<div class="carousel-item">
+<img src="https://images.pexels.com/photos/2199292/pexels-photo-2199292.jpeg?w=1400" style="height:480px;object-fit:cover;" class="w-100">
+<div class="carousel-caption">
+<h2 class="text-shadow">Pan India Cargo Transport Network</h2>
+<p>Warehouse | FTL | LTL | Express Movement</p>
+<a href="#services" class="btn btn-warning px-4">Our Services</a>
+</div>
+</div>
+</div>
+
+<button class="carousel-control-prev" data-bs-target="#truckSlider" data-bs-slide="prev">
+<span class="carousel-control-prev-icon"></span>
+</button>
+<button class="carousel-control-next" data-bs-target="#truckSlider" data-bs-slide="next">
+<span class="carousel-control-next-icon"></span>
+</button>
+</div>
+</header>
+
+<!-- ABOUT -->
+<section id="about" class="p-5">
+<h2 class="section-title">About RTCPL</h2>
+<div class="container">
+<p class="lead text-center">
+Realive Transport & Cargo Pvt Ltd (RTCPL) provides reliable logistics solutions across India.  
+We operate a strong fleet network ensuring safe & on-time cargo movement.
+</p>
+</div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="p-5 bg-light">
+<h2 class="section-title">Our Logistics Services</h2>
+<div class="container">
+<div class="row g-4">
+
+<div class="col-md-4">
+<div class="card p-3">
+<i class="fa-solid fa-truck-fast fa-3x text-primary mb-3"></i>
+<h5>Full Truck Load (FTL)</h5>
+<p>Dedicated vehicles for bulk delivery anywhere in India.</p>
+</div></div>
+
+<div class="col-md-4">
+<div class="card p-3">
+<i class="fa-solid fa-boxes-stacked fa-3x text-primary mb-3"></i>
+<h5>Part Load (LTL)</h5>
+<p>Economical part cargo movement with shared transport.</p>
+</div></div>
+
+<div class="col-md-4">
+<div class="card p-3">
+<i class="fa-solid fa-warehouse fa-3x text-primary mb-3"></i>
+<h5>Warehousing & Distribution</h5>
+<p>Inventory storage, dispatch, and corporate distribution support.</p>
+</div></div>
+
+</div>
+</div>
+</section>
+
+<!-- FLEET GALLERY -->
+<section id="fleet" class="p-5">
+<h2 class="section-title">Our Fleet</h2>
+<div class="container">
+<div class="row g-3 text-center">
+
+<div class="col-6 col-md-3"><img src="https://images.pexels.com/photos/2199293/pexels-photo-2199293.jpeg?w=800" class="w-100"></div>
+<div class="col-6 col-md-3"><img src="https://images.pexels.com/photos/2199292/pexels-photo-2199292.jpeg?w=800" class="w-100"></div>
+<div class="col-6 col-md-3"><img src="https://images.pexels.com/photos/205430/pexels-photo-205430.jpeg?w=800" class="w-100"></div>
+<div class="col-6 col-md-3"><img src="https://images.pexels.com/photos/4483610/pexels-photo-4483610.jpeg?w=800" class="w-100"></div>
+
+</div>
+</div>
+</section>
+
+<!-- TRACKING -->
+<section id="tracking" class="p-5 bg-light">
+<h2 class="section-title">Track Your Shipment</h2>
+<div class="container text-center">
+<input type="text" class="form-control w-50 m-auto" placeholder="Enter LR / Tracking Number">
+<button class="btn btn-primary mt-3 px-4">Track Now</button>
+<p class="mt-2 text-muted">Live tracking integration configurable</p>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+<h2 class="section-title">Contact Us</h2>
+<div class="container text-center">
+<p><b>Realive Transport & Cargo Pvt Ltd (RTCPL)</b></p>
+<p>Email: info@rtcpl.in | Phone: +91 9867339218</p>
+<p>Address: Mumbai, Maharashtra - India</p>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+© 2026 RTCPL Logistics | Designed for Transport Business
+</footer>
+
+<!-- WhatsApp Floating -->
+<a href="https://wa.me/919867339218" target="_blank" class="whatsapp-float">
+<i class="fab fa-whatsapp"></i>
+</a>
+
+<script>AOS.init();</script>
+</body>
+</html>
