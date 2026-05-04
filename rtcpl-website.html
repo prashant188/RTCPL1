@@ -1,0 +1,1905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RTCPL – Relieve Transport Company Pvt. Ltd.</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-dark: #0a1f44;
+    --blue-mid: #1557c0;
+    --blue-bright: #1e7fe8;
+    --orange: #e87d1e;
+    --white: #ffffff;
+    --gray-light: #f4f7fc;
+    --gray-mid: #e0e8f4;
+    --text-dark: #0d1b35;
+    --text-body: #3a4a66;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    color: var(--text-body);
+    background: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    background: rgba(10,31,68,0.97);
+    backdrop-filter: blur(10px);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    border-bottom: 2px solid var(--orange);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .nav-logo-icon {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--blue-bright), var(--blue-mid));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid var(--orange);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: 13px; color: var(--white);
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800; font-size: 20px; color: var(--white);
+    letter-spacing: 1px;
+  }
+  .nav-logo span em { color: var(--orange); font-style: normal; }
+
+  .nav-links {
+    display: flex; gap: 28px; list-style: none;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 14px; font-weight: 500; letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 2px; background: var(--orange);
+    transition: width 0.25s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--orange);
+    color: var(--white) !important;
+    padding: 8px 18px; border-radius: 4px;
+    font-weight: 600 !important;
+  }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: #d06e12 !important; }
+
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--white); transition: all 0.3s;
+  }
+
+  /* ─── HERO SLIDER ─── */
+  #hero {
+    position: relative; width: 100%; height: 100vh;
+    min-height: 560px; overflow: hidden;
+  }
+
+  /* Slides */
+  .slider-track {
+    display: flex; width: 300%; height: 100%;
+    transition: transform 0.85s cubic-bezier(0.77,0,0.18,1);
+  }
+  .slide {
+    flex: 0 0 33.3333%; height: 100%;
+    position: relative; overflow: hidden;
+  }
+  .slide-bg {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+  }
+  .slide-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(105deg, rgba(6,14,35,0.82) 0%, rgba(6,14,35,0.45) 55%, rgba(6,14,35,0.1) 100%);
+    z-index: 2;
+  }
+  .slide-content {
+    position: absolute; z-index: 3;
+    top: 50%; left: 5%; transform: translateY(-50%);
+    max-width: 580px; padding-top: 64px;
+  }
+
+  .slide-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(232,125,30,0.18); border: 1px solid rgba(232,125,30,0.5);
+    color: var(--orange); border-radius: 30px;
+    padding: 5px 16px; font-size: 11px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 18px;
+    opacity: 0; transform: translateY(18px);
+    transition: opacity 0.5s 0.2s, transform 0.5s 0.2s;
+  }
+  .slide-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(38px, 6vw, 76px);
+    font-weight: 900; line-height: 0.93;
+    color: var(--white); letter-spacing: -1px;
+    margin-bottom: 16px;
+    opacity: 0; transform: translateY(22px);
+    transition: opacity 0.55s 0.35s, transform 0.55s 0.35s;
+  }
+  .slide-title em { color: var(--orange); font-style: normal; display: block; }
+  .slide-desc {
+    font-size: 16px; color: rgba(255,255,255,0.72);
+    line-height: 1.75; max-width: 440px; margin-bottom: 32px;
+    opacity: 0; transform: translateY(18px);
+    transition: opacity 0.5s 0.48s, transform 0.5s 0.48s;
+  }
+  .slide-btns {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.5s 0.6s, transform 0.5s 0.6s;
+  }
+
+  /* Animate in active slide content */
+  .slide.active .slide-tag,
+  .slide.active .slide-title,
+  .slide.active .slide-desc,
+  .slide.active .slide-btns {
+    opacity: 1; transform: none;
+  }
+
+  /* Stat strip */
+  .slide-stats {
+    position: absolute; z-index: 3;
+    bottom: 70px; left: 5%; right: 5%;
+    display: flex; gap: 12px; flex-wrap: wrap;
+    opacity: 0; transition: opacity 0.5s 0.7s;
+  }
+  .slide.active .slide-stats { opacity: 1; }
+  .stat-pill {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    backdrop-filter: blur(8px);
+    padding: 10px 18px; border-radius: 30px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .stat-pill .sp-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px; font-weight: 900; color: var(--orange); line-height: 1;
+  }
+  .stat-pill .sp-lbl { font-size: 11px; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* Buttons */
+  .btn-primary {
+    background: var(--orange); color: var(--white); text-decoration: none;
+    padding: 13px 26px; border-radius: 6px;
+    font-weight: 700; font-size: 15px;
+    transition: all 0.2s; box-shadow: 0 6px 24px rgba(232,125,30,0.35);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: #d06e12; transform: translateY(-2px); }
+  .btn-secondary {
+    border: 2px solid rgba(255,255,255,0.35);
+    color: var(--white); text-decoration: none;
+    padding: 11px 24px; border-radius: 6px;
+    font-weight: 600; font-size: 15px;
+    transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+    backdrop-filter: blur(4px);
+    background: rgba(255,255,255,0.06);
+  }
+  .btn-secondary:hover { border-color: var(--white); background: rgba(255,255,255,0.12); }
+
+  /* Navigation arrows */
+  .slider-arrow {
+    position: absolute; top: 50%; z-index: 10;
+    transform: translateY(-50%);
+    width: 50px; height: 50px; border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.25);
+    color: var(--white); font-size: 20px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.2s;
+    backdrop-filter: blur(6px);
+  }
+  .slider-arrow:hover { background: var(--orange); border-color: var(--orange); }
+  .slider-prev { left: 20px; }
+  .slider-next { right: 20px; }
+
+  /* Dots */
+  .slider-dots {
+    position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+    z-index: 10; display: flex; gap: 10px; align-items: center;
+  }
+  .dot {
+    width: 8px; height: 8px; border-radius: 4px;
+    background: rgba(255,255,255,0.4);
+    cursor: pointer; transition: all 0.3s;
+  }
+  .dot.active { width: 28px; background: var(--orange); }
+
+  /* Slide counter */
+  .slide-counter {
+    position: absolute; top: 82px; right: 5%; z-index: 10;
+    font-family: 'Barlow Condensed', sans-serif;
+    color: rgba(255,255,255,0.5); font-size: 13px; font-weight: 600;
+    letter-spacing: 1px;
+  }
+  .slide-counter span { color: var(--white); font-size: 22px; font-weight: 900; }
+
+  /* Progress bar */
+  .slider-progress {
+    position: absolute; bottom: 0; left: 0; z-index: 10;
+    height: 3px; background: var(--orange);
+    width: 0%; transition: width 0.1s linear;
+  }
+
+  /* ─── SECTION COMMON ─── */
+  section { padding: 90px 5%; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--orange);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(32px, 4vw, 54px);
+    font-weight: 900; color: var(--text-dark);
+    line-height: 1.05; margin-bottom: 16px;
+  }
+  .section-desc {
+    font-size: 16px; color: var(--text-body);
+    max-width: 600px; line-height: 1.75;
+  }
+  .divider {
+    width: 56px; height: 4px;
+    background: linear-gradient(90deg, var(--orange), var(--blue-bright));
+    border-radius: 2px; margin: 16px 0 36px;
+  }
+
+  /* ─── OVERVIEW ─── */
+  #overview { background: var(--gray-light); }
+  .overview-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 70px;
+    align-items: center;
+  }
+  .overview-text p {
+    font-size: 16px; line-height: 1.8; color: var(--text-body);
+    margin-bottom: 16px;
+  }
+  .overview-highlights {
+    display: flex; flex-direction: column; gap: 14px;
+    margin-top: 28px;
+  }
+  .highlight-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: var(--white); border-radius: 10px;
+    padding: 16px 20px;
+    border-left: 4px solid var(--orange);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .highlight-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--blue-mid), var(--blue-bright));
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 17px;
+  }
+  .highlight-item h4 {
+    font-weight: 700; color: var(--text-dark); font-size: 15px; margin-bottom: 3px;
+  }
+  .highlight-item p { font-size: 13px; color: var(--text-body); margin: 0; line-height: 1.5; }
+  .overview-visual {
+    background: linear-gradient(135deg, var(--blue-dark), #0d2d6e);
+    border-radius: 20px; padding: 44px 36px;
+    color: var(--white); text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .overview-visual::before {
+    content: 'RTCPL';
+    position: absolute; top: -20px; right: -10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 120px; font-weight: 900; opacity: 0.04;
+    color: var(--white); letter-spacing: -4px;
+  }
+  .ov-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px; font-weight: 800; margin-bottom: 6px;
+  }
+  .ov-sub { font-size: 13px; opacity: 0.6; margin-bottom: 30px; }
+  .ov-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  .ov-stat {
+    background: rgba(255,255,255,0.07);
+    border-radius: 12px; padding: 20px 14px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .ov-stat .n {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 42px; font-weight: 900;
+    color: var(--orange); line-height: 1;
+  }
+  .ov-stat .l { font-size: 12px; opacity: 0.7; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .ov-philosophy {
+    margin-top: 24px;
+    padding: 16px; border-radius: 10px;
+    background: rgba(232,125,30,0.12);
+    border: 1px solid rgba(232,125,30,0.25);
+    font-size: 14px; font-style: italic; opacity: 0.9; line-height: 1.6;
+  }
+
+  /* ─── SERVICES ─── */
+  #services { background: var(--white); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    margin-top: 10px;
+  }
+  .service-card {
+    border: 1px solid var(--gray-mid);
+    border-radius: 16px; padding: 32px 26px;
+    transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--blue-mid), var(--orange));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .service-card:hover { box-shadow: 0 12px 40px rgba(21,87,192,0.12); transform: translateY(-4px); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--blue-mid), var(--blue-bright));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin-bottom: 18px;
+  }
+  .service-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px; font-weight: 800; color: var(--text-dark);
+    margin-bottom: 10px;
+  }
+  .service-card p { font-size: 14px; line-height: 1.7; color: var(--text-body); margin-bottom: 16px; }
+  .service-list { list-style: none; }
+  .service-list li {
+    font-size: 13px; color: var(--text-body);
+    padding: 5px 0; border-bottom: 1px solid var(--gray-mid);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .service-list li:last-child { border-bottom: none; }
+  .service-list li::before { content: '→'; color: var(--orange); font-weight: 700; flex-shrink: 0; }
+
+  /* ─── INDUSTRIES ─── */
+  #industries { background: var(--blue-dark); }
+  #industries .section-title { color: var(--white); }
+  #industries .section-desc { color: rgba(255,255,255,0.65); }
+  #industries .section-label { color: var(--orange); }
+  .industries-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+    margin-top: 10px;
+  }
+  .industry-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; padding: 28px 22px;
+    transition: all 0.25s;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .industry-card:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: var(--orange);
+    transform: translateY(-3px);
+  }
+  .ind-icon {
+    font-size: 32px; width: 56px; height: 56px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 12px; display: flex;
+    align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .ind-text h4 { color: var(--white); font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+  .ind-text p { color: rgba(255,255,255,0.55); font-size: 13px; line-height: 1.5; }
+
+  /* ─── WHY CHOOSE ─── */
+  #why { background: var(--gray-light); }
+  .why-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
+  }
+  .why-reasons { display: flex; flex-direction: column; gap: 18px; }
+  .why-item {
+    display: flex; gap: 18px; align-items: flex-start;
+    background: var(--white); border-radius: 12px; padding: 22px 20px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .why-item:hover { box-shadow: 0 8px 32px rgba(21,87,192,0.12); transform: translateX(4px); }
+  .why-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px; font-weight: 900; color: var(--orange);
+    line-height: 1; flex-shrink: 0; width: 36px; text-align: center;
+  }
+  .why-item h4 { font-weight: 700; color: var(--text-dark); font-size: 16px; margin-bottom: 5px; }
+  .why-item p { font-size: 14px; color: var(--text-body); line-height: 1.6; }
+  .why-cta-panel {
+    background: linear-gradient(135deg, var(--blue-mid) 0%, var(--blue-dark) 100%);
+    border-radius: 20px; padding: 44px 36px;
+    color: var(--white); position: sticky; top: 80px;
+  }
+  .why-cta-panel h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 34px; font-weight: 900; margin-bottom: 16px; line-height: 1.1;
+  }
+  .why-cta-panel h3 span { color: var(--orange); }
+  .why-cta-panel p { font-size: 15px; opacity: 0.8; line-height: 1.7; margin-bottom: 28px; }
+  .contact-detail {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px; padding: 14px 18px; margin-bottom: 12px;
+    font-size: 14px;
+  }
+  .contact-detail .ico { font-size: 20px; width: 30px; text-align: center; }
+  .contact-detail a { color: var(--white); text-decoration: none; }
+  .contact-detail a:hover { color: var(--orange); }
+
+  /* ─── CUSTOMERS ─── */
+  #customers { background: var(--white); }
+  .customers-intro {
+    display: grid; grid-template-columns: 1fr 2fr; gap: 60px;
+    align-items: start; margin-bottom: 50px;
+  }
+  .customer-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  }
+  .customer-card {
+    border: 1px solid var(--gray-mid);
+    border-radius: 10px; padding: 20px 16px;
+    text-align: center; font-size: 13px;
+    font-weight: 600; color: var(--text-dark);
+    line-height: 1.4; transition: all 0.2s;
+  }
+  .customer-card:hover {
+    border-color: var(--blue-bright);
+    box-shadow: 0 4px 20px rgba(30,127,232,0.12);
+    transform: translateY(-2px);
+    color: var(--blue-mid);
+  }
+  .customer-card .c-icon { font-size: 24px; margin-bottom: 8px; display: block; }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, #0d2d6e 100%);
+    color: var(--white);
+  }
+  #contact .section-title { color: var(--white); }
+  #contact .section-label { color: var(--orange); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
+  }
+  .contact-info p { color: rgba(255,255,255,0.7); font-size: 15px; line-height: 1.8; margin-bottom: 28px; }
+  .contact-cards { display: flex; flex-direction: column; gap: 14px; }
+  .c-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px; padding: 20px 22px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .c-card .c-ico {
+    width: 42px; height: 42px; border-radius: 10px;
+    background: rgba(232,125,30,0.2);
+    display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;
+  }
+  .c-card .c-label { font-size: 11px; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+  .c-card .c-value { font-weight: 600; font-size: 15px; }
+  .c-card .c-value a { color: var(--white); text-decoration: none; }
+  .c-card .c-value a:hover { color: var(--orange); }
+
+  .contact-form-side {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px; padding: 36px;
+  }
+  .contact-form-side h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 26px; font-weight: 800; margin-bottom: 24px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.7; margin-bottom: 7px; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px; padding: 12px 14px;
+    color: var(--white); font-size: 14px; font-family: 'Barlow', sans-serif;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { opacity: 0.45; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--orange);
+  }
+  .form-group select option { background: var(--blue-dark); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .btn-submit {
+    width: 100%; background: var(--orange); color: var(--white);
+    border: none; border-radius: 8px; padding: 14px;
+    font-size: 16px; font-weight: 700; font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-submit:hover { background: #d06e12; transform: translateY(-2px); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #060f23;
+    padding: 40px 5% 24px;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 20px;
+    border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px;
+  }
+  .footer-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px; font-weight: 900; color: var(--white);
+  }
+  .footer-logo span { color: var(--orange); }
+  .footer-copy { font-size: 13px; color: rgba(255,255,255,0.4); }
+  .footer-tagline {
+    font-size: 13px; color: rgba(255,255,255,0.4);
+    font-style: italic;
+  }
+
+  /* ─── SCROLL ANIMATION ─── */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  /* ─── MOBILE NAV ─── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: rgba(10,31,68,0.98); padding: 16px 5%; gap: 0; }
+    .nav-links.open { display: flex; }
+    .nav-links li { border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .nav-links a { display: block; padding: 14px 0; font-size: 16px; }
+    .hamburger { display: flex; }
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .stat-cards { grid-template-columns: 1fr 1fr; }
+    .overview-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .industries-grid { grid-template-columns: 1fr 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .customers-intro { grid-template-columns: 1fr; gap: 20px; }
+    .customer-grid { grid-template-columns: repeat(2, 1fr); }
+    .contact-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 60px 5%; }
+    .industries-grid { grid-template-columns: 1fr; }
+    .stat-cards { grid-template-columns: 1fr 1fr; }
+    .stat-card .num { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="nav-logo" href="#hero">
+    <div class="nav-logo-icon">RTCPL</div>
+    <span>RT<em>CPL</em></span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#overview">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#industries">Industries</a></li>
+    <li><a href="#customers">Customers</a></li>
+    <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO SLIDER -->
+<section id="hero">
+  <div class="slider-track" id="sliderTrack">
+
+    <!-- ── SLIDE 1 : TRUCK ── -->
+    <div class="slide active" id="slide-0">
+      <!-- SVG Illustrated Background: Highway at dusk with truck -->
+      <svg class="slide-bg" viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0a0e2a"/>
+            <stop offset="40%" stop-color="#0d2260"/>
+            <stop offset="100%" stop-color="#1a3d8f"/>
+          </linearGradient>
+          <linearGradient id="road1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1a1a2e"/>
+            <stop offset="100%" stop-color="#0d0d1a"/>
+          </linearGradient>
+          <linearGradient id="truckBody" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1557c0"/>
+            <stop offset="100%" stop-color="#0a3080"/>
+          </linearGradient>
+          <linearGradient id="truckCab" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#1e4fc0"/>
+            <stop offset="100%" stop-color="#2d6ae0"/>
+          </linearGradient>
+          <linearGradient id="sunset" x1="0.5" y1="0" x2="0.5" y2="1">
+            <stop offset="0%" stop-color="#e87d1e" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#e87d1e" stop-opacity="0"/>
+          </linearGradient>
+          <radialGradient id="glow1" cx="75%" cy="45%" r="35%">
+            <stop offset="0%" stop-color="#e87d1e" stop-opacity="0.18"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+          <filter id="blur1"><feGaussianBlur stdDeviation="3"/></filter>
+        </defs>
+        <!-- Sky -->
+        <rect width="1440" height="900" fill="url(#sky1)"/>
+        <rect width="1440" height="900" fill="url(#glow1)"/>
+        <!-- Stars -->
+        <g fill="white" opacity="0.6">
+          <circle cx="120" cy="60" r="1.2"/><circle cx="300" cy="40" r="0.8"/><circle cx="500" cy="80" r="1.5"/>
+          <circle cx="700" cy="30" r="1"/><circle cx="900" cy="55" r="1.3"/><circle cx="1100" cy="45" r="0.9"/>
+          <circle cx="1300" cy="70" r="1.1"/><circle cx="200" cy="120" r="0.7"/><circle cx="450" cy="100" r="1"/>
+          <circle cx="650" cy="90" r="0.8"/><circle cx="850" cy="110" r="1.2"/><circle cx="1050" cy="95" r="0.9"/>
+          <circle cx="1250" cy="85" r="1"/><circle cx="80" cy="150" r="0.6"/><circle cx="380" cy="140" r="0.8"/>
+        </g>
+        <!-- Horizon glow -->
+        <ellipse cx="1050" cy="470" rx="350" ry="120" fill="url(#sunset)" filter="url(#blur1)"/>
+        <!-- Mountains -->
+        <polygon points="0,500 180,280 350,500" fill="#0c1a3a" opacity="0.9"/>
+        <polygon points="150,500 380,260 600,500" fill="#0e1f45" opacity="0.85"/>
+        <polygon points="400,500 620,300 840,500" fill="#0d1c40" opacity="0.8"/>
+        <polygon points="700,500 900,320 1100,500" fill="#0c1a38" opacity="0.75"/>
+        <polygon points="1000,500 1200,290 1440,500" fill="#0a1530" opacity="0.8"/>
+        <!-- Road surface -->
+        <rect x="0" y="560" width="1440" height="340" fill="url(#road1)"/>
+        <!-- Road base -->
+        <rect x="0" y="560" width="1440" height="12" fill="#252535"/>
+        <!-- Lane markings -->
+        <rect x="0" y="620" width="1440" height="5" fill="#ffffff" opacity="0.08"/>
+        <rect x="0" y="700" width="1440" height="5" fill="#ffffff" opacity="0.06"/>
+        <!-- Dashed center line -->
+        <g stroke="#f0b030" stroke-width="4" stroke-dasharray="60,40" opacity="0.7">
+          <line x1="0" y1="640" x2="1440" y2="640"/>
+        </g>
+        <!-- Road edge lines -->
+        <line x1="0" y1="565" x2="1440" y2="565" stroke="white" stroke-width="3" opacity="0.3"/>
+        <!-- Road perspective lines -->
+        <line x1="720" y1="562" x2="0" y2="900" stroke="white" stroke-width="2" opacity="0.06"/>
+        <line x1="720" y1="562" x2="1440" y2="900" stroke="white" stroke-width="2" opacity="0.06"/>
+        <!-- Headlight beams -->
+        <polygon points="1170,565 1230,565 1440,900 980,900" fill="white" opacity="0.035"/>
+        <polygon points="1185,565 1215,565 1350,900 1060,900" fill="white" opacity="0.045"/>
+
+        <!-- ── TRUCK ── -->
+        <!-- Trailer body -->
+        <rect x="600" y="440" width="580" height="140" rx="4" fill="url(#truckBody)"/>
+        <!-- Trailer side details -->
+        <rect x="608" y="448" width="564" height="124" rx="2" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+        <!-- RTCPL branding on trailer -->
+        <rect x="640" y="468" width="300" height="84" rx="4" fill="rgba(0,0,0,0.25)"/>
+        <text x="790" y="518" font-family="Arial Black, sans-serif" font-size="38" font-weight="900" fill="white" text-anchor="middle" letter-spacing="-1">RTCPL</text>
+        <text x="790" y="538" font-family="Arial, sans-serif" font-size="11" fill="rgba(255,255,255,0.6)" text-anchor="middle" letter-spacing="1">RELIEVE TRANSPORT CO. PVT. LTD.</text>
+        <!-- Orange stripe on trailer -->
+        <rect x="600" y="555" width="580" height="12" fill="#e87d1e" opacity="0.8"/>
+        <!-- Trailer wheels -->
+        <circle cx="680" cy="582" r="28" fill="#1a1a2e"/>
+        <circle cx="680" cy="582" r="20" fill="#2a2a3e"/>
+        <circle cx="680" cy="582" r="10" fill="#0a0a1a"/>
+        <circle cx="780" cy="582" r="28" fill="#1a1a2e"/>
+        <circle cx="780" cy="582" r="20" fill="#2a2a3e"/>
+        <circle cx="780" cy="582" r="10" fill="#0a0a1a"/>
+        <circle cx="1050" cy="582" r="28" fill="#1a1a2e"/>
+        <circle cx="1050" cy="582" r="20" fill="#2a2a3e"/>
+        <circle cx="1050" cy="582" r="10" fill="#0a0a1a"/>
+        <circle cx="1130" cy="582" r="28" fill="#1a1a2e"/>
+        <circle cx="1130" cy="582" r="20" fill="#2a2a3e"/>
+        <circle cx="1130" cy="582" r="10" fill="#0a0a1a"/>
+        <!-- Cab -->
+        <rect x="1180" y="460" width="180" height="120" rx="8" fill="url(#truckCab)"/>
+        <!-- Windshield -->
+        <rect x="1190" y="468" width="120" height="70" rx="4" fill="#0a1f50" opacity="0.85"/>
+        <rect x="1194" y="472" width="112" height="62" rx="3" fill="#1535a0" opacity="0.5"/>
+        <!-- Cab window glare -->
+        <line x1="1198" y1="476" x2="1215" y2="530" stroke="white" stroke-width="2" opacity="0.15"/>
+        <!-- Headlights -->
+        <rect x="1350" y="485" width="20" height="14" rx="3" fill="#fffbe0"/>
+        <rect x="1350" y="505" width="20" height="10" rx="2" fill="rgba(255,200,50,0.6)"/>
+        <!-- Door handle -->
+        <rect x="1290" y="510" width="30" height="5" rx="2" fill="rgba(255,255,255,0.2)"/>
+        <!-- Exhaust pipe -->
+        <rect x="1340" y="420" width="10" height="48" rx="4" fill="#1a2060"/>
+        <!-- Smoke from exhaust -->
+        <circle cx="1344" cy="415" r="8" fill="rgba(200,210,255,0.06)"/>
+        <circle cx="1348" cy="400" r="12" fill="rgba(200,210,255,0.04)"/>
+        <circle cx="1343" cy="385" r="16" fill="rgba(200,210,255,0.03)"/>
+        <!-- Cab wheels -->
+        <circle cx="1210" cy="582" r="28" fill="#1a1a2e"/>
+        <circle cx="1210" cy="582" r="20" fill="#2a2a3e"/>
+        <circle cx="1210" cy="582" r="10" fill="#0a0a1a"/>
+        <circle cx="1340" cy="582" r="28" fill="#1a1a2e"/>
+        <circle cx="1340" cy="582" r="20" fill="#2a2a3e"/>
+        <circle cx="1340" cy="582" r="10" fill="#0a0a1a"/>
+        <!-- Road reflection under truck -->
+        <rect x="600" y="610" width="800" height="20" fill="rgba(30,80,200,0.08)" rx="4"/>
+
+        <!-- City skyline silhouette -->
+        <g fill="#060e25" opacity="0.9">
+          <rect x="50" y="390" width="30" height="110"/>
+          <rect x="90" y="360" width="40" height="140"/>
+          <rect x="140" y="410" width="25" height="90"/>
+          <rect x="175" y="370" width="35" height="130"/>
+          <rect x="220" y="395" width="28" height="105"/>
+          <rect x="258" y="345" width="45" height="155"/>
+          <rect x="313" y="375" width="32" height="125"/>
+          <rect x="355" y="420" width="22" height="80"/>
+          <rect x="387" y="380" width="38" height="120"/>
+          <rect x="435" y="350" width="42" height="150"/>
+          <rect x="487" y="410" width="26" height="90"/>
+          <rect x="523" y="365" width="36" height="135"/>
+        </g>
+        <!-- Building windows -->
+        <g fill="#e87d1e" opacity="0.35">
+          <rect x="95" y="368" width="6" height="5"/><rect x="106" y="368" width="6" height="5"/>
+          <rect x="95" y="380" width="6" height="5"/><rect x="106" y="380" width="6" height="5"/>
+          <rect x="95" y="392" width="6" height="5"/><rect x="106" y="392" width="6" height="5"/>
+          <rect x="265" y="355" width="7" height="6"/><rect x="278" y="355" width="7" height="6"/>
+          <rect x="291" y="355" width="7" height="6"/><rect x="265" y="368" width="7" height="6"/>
+          <rect x="278" y="368" width="7" height="6"/>
+        </g>
+        <g fill="#4488ff" opacity="0.3">
+          <rect x="180" y="378" width="6" height="5"/><rect x="192" y="378" width="6" height="5"/>
+          <rect x="440" y="358" width="7" height="6"/><rect x="453" y="358" width="7" height="6"/>
+          <rect x="440" y="372" width="7" height="6"/><rect x="453" y="372" width="7" height="6"/>
+        </g>
+      </svg>
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <div class="slide-tag">🚚 Fleet Operations</div>
+        <h1 class="slide-title">India's Most<br><em>Reliable</em><br>Transporter</h1>
+        <p class="slide-desc">Dedicated FTL & PTL movements across PAN India — on time, every time, with full cargo accountability.</p>
+        <div class="slide-btns">
+          <a href="#contact" class="btn-primary">Get a Quote →</a>
+          <a href="#services" class="btn-secondary">Our Services</a>
+        </div>
+      </div>
+      <div class="slide-stats">
+        <div class="stat-pill"><div class="sp-num">16+</div><div class="sp-lbl">Years<br>Experience</div></div>
+        <div class="stat-pill"><div class="sp-num">PAN</div><div class="sp-lbl">India<br>Coverage</div></div>
+        <div class="stat-pill"><div class="sp-num">FTL</div><div class="sp-lbl">Full Truck<br>Load</div></div>
+        <div class="stat-pill"><div class="sp-num">PTL</div><div class="sp-lbl">Part Truck<br>Load</div></div>
+      </div>
+    </div>
+
+    <!-- ── SLIDE 2 : WAREHOUSE ── -->
+    <div class="slide" id="slide-1">
+      <svg class="slide-bg" viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="whFloor" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1a1a28"/>
+            <stop offset="100%" stop-color="#0d0d18"/>
+          </linearGradient>
+          <linearGradient id="whWall" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1e2245"/>
+            <stop offset="100%" stop-color="#141830"/>
+          </linearGradient>
+          <linearGradient id="shelfGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#1a2060"/>
+            <stop offset="100%" stop-color="#0e1840"/>
+          </linearGradient>
+          <radialGradient id="lightCone" cx="50%" cy="0%" r="80%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+          <radialGradient id="lightSpot1" cx="25%" cy="20%" r="30%">
+            <stop offset="0%" stop-color="#ffe8b0" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+          <radialGradient id="lightSpot2" cx="75%" cy="20%" r="30%">
+            <stop offset="0%" stop-color="#ffe8b0" stop-opacity="0.22"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+          <filter id="glow2"><feGaussianBlur stdDeviation="6" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="softBlur"><feGaussianBlur stdDeviation="2"/></filter>
+        </defs>
+
+        <!-- Background wall -->
+        <rect width="1440" height="900" fill="url(#whWall)"/>
+        <rect width="1440" height="900" fill="url(#lightCone)"/>
+        <rect width="1440" height="900" fill="url(#lightSpot1)"/>
+        <rect width="1440" height="900" fill="url(#lightSpot2)"/>
+
+        <!-- Ceiling structure -->
+        <rect x="0" y="0" width="1440" height="60" fill="#111425"/>
+        <!-- Ceiling beams -->
+        <rect x="0" y="55" width="1440" height="8" fill="#1a1e35"/>
+        <rect x="200" y="0" width="12" height="200" fill="#111425" opacity="0.6"/>
+        <rect x="500" y="0" width="12" height="200" fill="#111425" opacity="0.6"/>
+        <rect x="800" y="0" width="12" height="200" fill="#111425" opacity="0.6"/>
+        <rect x="1100" y="0" width="12" height="200" fill="#111425" opacity="0.6"/>
+        <rect x="1380" y="0" width="12" height="200" fill="#111425" opacity="0.6"/>
+
+        <!-- Ceiling lights -->
+        <g filter="url(#glow2)">
+          <rect x="285" y="50" width="80" height="14" rx="4" fill="#fffbe0" opacity="0.9"/>
+          <rect x="605" y="50" width="80" height="14" rx="4" fill="#fffbe0" opacity="0.9"/>
+          <rect x="905" y="50" width="80" height="14" rx="4" fill="#fffbe0" opacity="0.9"/>
+          <rect x="1160" y="50" width="80" height="14" rx="4" fill="#fffbe0" opacity="0.85"/>
+        </g>
+        <!-- Light cones from ceiling -->
+        <polygon points="285,64 365,64 480,550 170,550" fill="white" opacity="0.025"/>
+        <polygon points="605,64 685,64 800,550 490,550" fill="white" opacity="0.025"/>
+        <polygon points="905,64 985,64 1100,550 790,550" fill="white" opacity="0.025"/>
+        <polygon points="1160,64 1240,64 1355,550 1045,550" fill="white" opacity="0.025"/>
+
+        <!-- Floor -->
+        <rect x="0" y="680" width="1440" height="220" fill="url(#whFloor)"/>
+        <!-- Floor markings -->
+        <rect x="0" y="680" width="1440" height="4" fill="#252535"/>
+        <!-- Yellow safety lines -->
+        <line x1="0" y1="700" x2="1440" y2="700" stroke="#e8b01e" stroke-width="3" stroke-dasharray="80,30" opacity="0.5"/>
+        <line x1="0" y1="760" x2="1440" y2="760" stroke="#e8b01e" stroke-width="2" opacity="0.2"/>
+        <!-- Floor grid -->
+        <g stroke="#ffffff" stroke-width="0.5" opacity="0.04">
+          <line x1="0" y1="720" x2="1440" y2="720"/>
+          <line x1="0" y1="740" x2="1440" y2="740"/>
+          <line x1="0" y1="800" x2="1440" y2="800"/>
+          <line x1="0" y1="850" x2="1440" y2="850"/>
+          <line x1="200" y1="680" x2="200" y2="900"/>
+          <line x1="400" y1="680" x2="400" y2="900"/>
+          <line x1="600" y1="680" x2="600" y2="900"/>
+          <line x1="800" y1="680" x2="800" y2="900"/>
+          <line x1="1000" y1="680" x2="1000" y2="900"/>
+          <line x1="1200" y1="680" x2="1200" y2="900"/>
+          <line x1="1400" y1="680" x2="1400" y2="900"/>
+        </g>
+        <!-- Floor reflection -->
+        <rect x="0" y="680" width="1440" height="60" fill="rgba(255,235,150,0.04)"/>
+
+        <!-- Back wall shelving unit -->
+        <!-- Shelf frame back-left -->
+        <rect x="60" y="100" width="18" height="590" fill="#0e1435"/>
+        <rect x="268" y="100" width="18" height="590" fill="#0e1435"/>
+        <!-- Shelf planks -->
+        <rect x="60" y="160" width="226" height="18" fill="#1a2050"/>
+        <rect x="60" y="270" width="226" height="18" fill="#1a2050"/>
+        <rect x="60" y="380" width="226" height="18" fill="#1a2050"/>
+        <rect x="60" y="490" width="226" height="18" fill="#1a2050"/>
+        <rect x="60" y="600" width="226" height="18" fill="#1a2050"/>
+        <!-- Boxes on left shelf -->
+        <g>
+          <!-- Row 1 -->
+          <rect x="70" y="120" width="55" height="38" rx="2" fill="#1557c0"/><rect x="72" y="122" width="51" height="34" rx="1" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          <rect x="132" y="120" width="55" height="38" rx="2" fill="#e87d1e"/><rect x="134" y="122" width="51" height="34" rx="1" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          <rect x="194" y="120" width="50" height="38" rx="2" fill="#1557c0"/>
+          <!-- Row 2 -->
+          <rect x="70" y="230" width="55" height="38" rx="2" fill="#0d3080"/>
+          <rect x="132" y="230" width="55" height="38" rx="2" fill="#1557c0"/>
+          <rect x="194" y="230" width="50" height="38" rx="2" fill="#e87d1e"/>
+          <!-- Row 3 -->
+          <rect x="70" y="340" width="40" height="38" rx="2" fill="#e87d1e"/>
+          <rect x="118" y="340" width="55" height="38" rx="2" fill="#1557c0"/>
+          <rect x="181" y="340" width="63" height="38" rx="2" fill="#0d3080"/>
+          <!-- Row 4 -->
+          <rect x="70" y="452" width="55" height="36" rx="2" fill="#1557c0"/>
+          <rect x="132" y="452" width="40" height="36" rx="2" fill="#e87d1e"/>
+          <rect x="180" y="452" width="64" height="36" rx="2" fill="#0d3080"/>
+          <!-- Row 5 -->
+          <rect x="70" y="562" width="63" height="36" rx="2" fill="#e87d1e"/>
+          <rect x="141" y="562" width="55" height="36" rx="2" fill="#1557c0"/>
+          <rect x="204" y="562" width="40" height="36" rx="2" fill="#0d3080"/>
+        </g>
+
+        <!-- Middle shelf unit -->
+        <rect x="360" y="100" width="18" height="590" fill="#0e1435"/>
+        <rect x="618" y="100" width="18" height="590" fill="#0e1435"/>
+        <rect x="360" y="160" width="276" height="18" fill="#1a2050"/>
+        <rect x="360" y="280" width="276" height="18" fill="#1a2050"/>
+        <rect x="360" y="400" width="276" height="18" fill="#1a2050"/>
+        <rect x="360" y="520" width="276" height="18" fill="#1a2050"/>
+        <rect x="360" y="620" width="276" height="18" fill="#1a2050"/>
+        <!-- Boxes middle shelf -->
+        <g>
+          <rect x="370" y="120" width="65" height="38" rx="2" fill="#1557c0"/>
+          <rect x="443" y="120" width="65" height="38" rx="2" fill="#e87d1e"/>
+          <rect x="516" y="120" width="78" height="38" rx="2" fill="#0d3080"/>
+          <rect x="370" y="240" width="78" height="38" rx="2" fill="#e87d1e"/>
+          <rect x="456" y="240" width="60" height="38" rx="2" fill="#1557c0"/>
+          <rect x="524" y="240" width="70" height="38" rx="2" fill="#0d3080"/>
+          <rect x="370" y="360" width="65" height="38" rx="2" fill="#0d3080"/>
+          <rect x="443" y="360" width="65" height="38" rx="2" fill="#1557c0"/>
+          <rect x="516" y="360" width="78" height="38" rx="2" fill="#e87d1e"/>
+          <rect x="370" y="480" width="78" height="38" rx="2" fill="#1557c0"/>
+          <rect x="456" y="480" width="60" height="38" rx="2" fill="#e87d1e"/>
+          <rect x="524" y="480" width="70" height="38" rx="2" fill="#0d3080"/>
+          <rect x="370" y="582" width="65" height="36" rx="2" fill="#e87d1e"/>
+          <rect x="443" y="582" width="78" height="36" rx="2" fill="#0d3080"/>
+          <rect x="529" y="582" width="65" height="36" rx="2" fill="#1557c0"/>
+        </g>
+
+        <!-- Right shelf unit -->
+        <rect x="720" y="100" width="18" height="590" fill="#0e1435"/>
+        <rect x="978" y="100" width="18" height="590" fill="#0e1435"/>
+        <rect x="720" y="160" width="276" height="18" fill="#1a2050"/>
+        <rect x="720" y="280" width="276" height="18" fill="#1a2050"/>
+        <rect x="720" y="400" width="276" height="18" fill="#1a2050"/>
+        <rect x="720" y="520" width="276" height="18" fill="#1a2050"/>
+        <rect x="720" y="620" width="276" height="18" fill="#1a2050"/>
+        <g>
+          <rect x="730" y="120" width="65" height="38" rx="2" fill="#e87d1e"/>
+          <rect x="803" y="120" width="65" height="38" rx="2" fill="#0d3080"/>
+          <rect x="876" y="120" width="78" height="38" rx="2" fill="#1557c0"/>
+          <rect x="730" y="240" width="78" height="38" rx="2" fill="#1557c0"/>
+          <rect x="816" y="240" width="60" height="38" rx="2" fill="#e87d1e"/>
+          <rect x="884" y="240" width="70" height="38" rx="2" fill="#0d3080"/>
+          <rect x="730" y="360" width="65" height="38" rx="2" fill="#0d3080"/>
+          <rect x="803" y="360" width="78" height="38" rx="2" fill="#1557c0"/>
+          <rect x="889" y="360" width="65" height="38" rx="2" fill="#e87d1e"/>
+          <rect x="730" y="480" width="65" height="38" rx="2" fill="#e87d1e"/>
+          <rect x="803" y="480" width="65" height="38" rx="2" fill="#0d3080"/>
+          <rect x="876" y="480" width="78" height="38" rx="2" fill="#1557c0"/>
+          <rect x="730" y="582" width="78" height="36" rx="2" fill="#1557c0"/>
+          <rect x="816" y="582" width="65" height="36" rx="2" fill="#e87d1e"/>
+          <rect x="889" y="582" width="65" height="36" rx="2" fill="#0d3080"/>
+        </g>
+
+        <!-- Far right shelf -->
+        <rect x="1080" y="100" width="18" height="590" fill="#0e1435"/>
+        <rect x="1380" y="100" width="18" height="590" fill="#0e1435"/>
+        <rect x="1080" y="160" width="318" height="18" fill="#1a2050"/>
+        <rect x="1080" y="290" width="318" height="18" fill="#1a2050"/>
+        <rect x="1080" y="420" width="318" height="18" fill="#1a2050"/>
+        <rect x="1080" y="550" width="318" height="18" fill="#1a2050"/>
+        <rect x="1080" y="640" width="318" height="18" fill="#1a2050"/>
+        <g>
+          <rect x="1090" y="120" width="75" height="38" rx="2" fill="#1557c0"/>
+          <rect x="1173" y="120" width="75" height="38" rx="2" fill="#e87d1e"/>
+          <rect x="1256" y="120" width="75" height="38" rx="2" fill="#0d3080"/>
+          <rect x="1339" y="120" width="55" height="38" rx="2" fill="#1557c0"/>
+          <rect x="1090" y="250" width="75" height="38" rx="2" fill="#0d3080"/>
+          <rect x="1173" y="250" width="75" height="38" rx="2" fill="#1557c0"/>
+          <rect x="1256" y="250" width="75" height="38" rx="2" fill="#e87d1e"/>
+          <rect x="1090" y="380" width="75" height="38" rx="2" fill="#e87d1e"/>
+          <rect x="1173" y="380" width="75" height="38" rx="2" fill="#0d3080"/>
+          <rect x="1256" y="380" width="130" height="38" rx="2" fill="#1557c0"/>
+          <rect x="1090" y="510" width="75" height="38" rx="2" fill="#1557c0"/>
+          <rect x="1173" y="510" width="75" height="38" rx="2" fill="#e87d1e"/>
+          <rect x="1256" y="510" width="75" height="38" rx="2" fill="#0d3080"/>
+          <rect x="1339" y="510" width="55" height="38" rx="2" fill="#1557c0"/>
+          <rect x="1090" y="602" width="130" height="36" rx="2" fill="#0d3080"/>
+          <rect x="1228" y="602" width="75" height="36" rx="2" fill="#1557c0"/>
+          <rect x="1311" y="602" width="83" height="36" rx="2" fill="#e87d1e"/>
+        </g>
+
+        <!-- Forklift on floor -->
+        <g transform="translate(430, 640)">
+          <!-- Body -->
+          <rect x="0" y="0" width="80" height="50" rx="4" fill="#e87d1e"/>
+          <rect x="8" y="6" width="38" height="28" rx="2" fill="#0a1f44" opacity="0.9"/>
+          <!-- Mast -->
+          <rect x="-5" y="-90" width="8" height="95" fill="#c0690e"/>
+          <rect x="12" y="-90" width="8" height="95" fill="#c0690e"/>
+          <!-- Forks -->
+          <rect x="-12" y="-10" width="28" height="6" fill="#888"/>
+          <rect x="-12" y="0" width="28" height="6" fill="#888"/>
+          <!-- Wheels -->
+          <circle cx="12" cy="52" r="14" fill="#1a1a2e"/>
+          <circle cx="12" cy="52" r="8" fill="#2a2a3e"/>
+          <circle cx="68" cy="52" r="14" fill="#1a1a2e"/>
+          <circle cx="68" cy="52" r="8" fill="#2a2a3e"/>
+        </g>
+
+        <!-- Pallets on floor -->
+        <g>
+          <!-- Pallet 1 -->
+          <rect x="700" y="670" width="100" height="10" fill="#5a3e1e"/>
+          <rect x="700" y="650" width="100" height="20" fill="#6a4a22"/>
+          <rect x="706" y="660" width="88" height="30" rx="2" fill="#1557c0" opacity="0.8"/>
+          <rect x="715" y="625" width="70" height="38" rx="2" fill="#1557c0"/>
+          <rect x="715" y="590" width="70" height="32" rx="2" fill="#e87d1e"/>
+          <!-- Pallet 2 -->
+          <rect x="850" y="670" width="100" height="10" fill="#5a3e1e"/>
+          <rect x="850" y="650" width="100" height="20" fill="#6a4a22"/>
+          <rect x="856" y="660" width="88" height="30" rx="2" fill="#0d3080" opacity="0.8"/>
+          <rect x="862" y="625" width="76" height="35" rx="2" fill="#e87d1e"/>
+          <!-- Pallet 3 -->
+          <rect x="1010" y="670" width="100" height="10" fill="#5a3e1e"/>
+          <rect x="1010" y="650" width="100" height="20" fill="#6a4a22"/>
+          <rect x="1016" y="632" width="88" height="38" rx="2" fill="#1557c0"/>
+          <rect x="1016" y="598" width="88" height="32" rx="2" fill="#0d3080"/>
+        </g>
+
+        <!-- RTCPL sign on back wall -->
+        <rect x="580" y="80" width="280" height="0" fill="none"/>
+      </svg>
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <div class="slide-tag">🏭 Warehousing</div>
+        <h1 class="slide-title">Smart<br><em>Warehousing</em><br>Solutions</h1>
+        <p class="slide-desc">Organised inward & outward logistics from modern facilities — ensuring your inventory is always safe, sorted, and ready to move.</p>
+        <div class="slide-btns">
+          <a href="#contact" class="btn-primary">Enquire Now →</a>
+          <a href="#services" class="btn-secondary">Learn More</a>
+        </div>
+      </div>
+      <div class="slide-stats">
+        <div class="stat-pill"><div class="sp-num">24/7</div><div class="sp-lbl">Operations</div></div>
+        <div class="stat-pill"><div class="sp-num">100%</div><div class="sp-lbl">Cargo Safety</div></div>
+        <div class="stat-pill"><div class="sp-num">PAN</div><div class="sp-lbl">India Network</div></div>
+      </div>
+    </div>
+
+    <!-- ── SLIDE 3 : CALL CENTER ── -->
+    <div class="slide" id="slide-2">
+      <svg class="slide-bg" viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="ccBg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#06101f"/>
+            <stop offset="50%" stop-color="#0a1a3a"/>
+            <stop offset="100%" stop-color="#0d2050"/>
+          </linearGradient>
+          <radialGradient id="ccGlow" cx="65%" cy="40%" r="50%">
+            <stop offset="0%" stop-color="#1e7fe8" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+          <radialGradient id="ccGlowOrange" cx="30%" cy="70%" r="40%">
+            <stop offset="0%" stop-color="#e87d1e" stop-opacity="0.12"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+          <filter id="screenGlow"><feGaussianBlur stdDeviation="5" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="softGlow"><feGaussianBlur stdDeviation="3"/></filter>
+        </defs>
+        <!-- Background -->
+        <rect width="1440" height="900" fill="url(#ccBg)"/>
+        <rect width="1440" height="900" fill="url(#ccGlow)"/>
+        <rect width="1440" height="900" fill="url(#ccGlowOrange)"/>
+        <!-- Grid overlay -->
+        <g stroke="#ffffff" stroke-width="0.4" opacity="0.04">
+          <line x1="0" y1="150" x2="1440" y2="150"/><line x1="0" y1="300" x2="1440" y2="300"/>
+          <line x1="0" y1="450" x2="1440" y2="450"/><line x1="0" y1="600" x2="1440" y2="600"/>
+          <line x1="0" y1="750" x2="1440" y2="750"/>
+          <line x1="180" y1="0" x2="180" y2="900"/><line x1="360" y1="0" x2="360" y2="900"/>
+          <line x1="540" y1="0" x2="540" y2="900"/><line x1="720" y1="0" x2="720" y2="900"/>
+          <line x1="900" y1="0" x2="900" y2="900"/><line x1="1080" y1="0" x2="1080" y2="900"/>
+          <line x1="1260" y1="0" x2="1260" y2="900"/>
+        </g>
+
+        <!-- Floating circuit lines -->
+        <g stroke="#1e7fe8" stroke-width="1.5" fill="none" opacity="0.15">
+          <polyline points="0,200 120,200 160,160 280,160 320,200 440,200"/>
+          <polyline points="0,350 80,350 120,310 300,310 340,350 500,350"/>
+          <polyline points="1440,180 1320,180 1280,220 1100,220 1060,180 900,180"/>
+          <polyline points="1440,400 1360,400 1320,360 1140,360 1100,400 950,400"/>
+        </g>
+        <!-- Circuit dots -->
+        <g fill="#1e7fe8" opacity="0.3">
+          <circle cx="280" cy="160" r="5"/><circle cx="320" cy="200" r="5"/>
+          <circle cx="120" cy="310" r="5"/><circle cx="340" cy="350" r="5"/>
+          <circle cx="1100" cy="220" r="5"/><circle cx="1060" cy="180" r="5"/>
+          <circle cx="1140" cy="360" r="5"/><circle cx="1100" cy="400" r="5"/>
+        </g>
+
+        <!-- Floor -->
+        <rect x="0" y="700" width="1440" height="200" fill="#06101f"/>
+        <rect x="0" y="700" width="1440" height="4" fill="#0d1a3a"/>
+
+        <!-- ── DESK ROW ── -->
+        <!-- Desk 1 (left) -->
+        <rect x="80" y="570" width="280" height="140" rx="4" fill="#0d1830"/>
+        <rect x="80" y="570" width="280" height="8" fill="#1557c0" opacity="0.5"/>
+        <!-- Monitor 1 -->
+        <rect x="110" y="450" width="200" height="130" rx="6" fill="#0a1220" filter="url(#screenGlow)"/>
+        <rect x="114" y="454" width="192" height="122" rx="4" fill="#0e2060"/>
+        <!-- Screen content - map/logistics dashboard -->
+        <rect x="118" y="458" width="184" height="114" rx="3" fill="#0a1840"/>
+        <g fill="#1e7fe8" opacity="0.7">
+          <rect x="122" y="462" width="60" height="8" rx="2"/>
+          <rect x="122" y="474" width="90" height="5" rx="1" opacity="0.5"/>
+          <rect x="122" y="483" width="75" height="5" rx="1" opacity="0.5"/>
+        </g>
+        <!-- Mini chart on screen -->
+        <polyline points="122,540 140,525 158,530 176,510 194,518 212,500 230,508 248,495 266,502 284,488 298,492" stroke="#e87d1e" stroke-width="2" fill="none"/>
+        <polyline points="122,540 140,525 158,530 176,510 194,518 212,500 230,508 248,495 266,502 284,488 298,492 298,555 122,555" fill="#e87d1e" opacity="0.08"/>
+        <!-- India map dots on screen -->
+        <g fill="#1e7fe8" opacity="0.6">
+          <circle cx="200" cy="475" r="2.5"/><circle cx="220" cy="468" r="2"/>
+          <circle cx="245" cy="480" r="2.5"/><circle cx="235" cy="495" r="2"/>
+          <circle cx="210" cy="490" r="2"/><circle cx="255" cy="470" r="1.5"/>
+          <circle cx="270" cy="490" r="2"/>
+        </g>
+        <g fill="#e87d1e" opacity="0.8">
+          <circle cx="200" cy="475" r="1.2"/><circle cx="245" cy="480" r="1.2"/>
+          <circle cx="235" cy="495" r="1.2"/>
+        </g>
+        <!-- Connection lines between dots -->
+        <g stroke="#1e7fe8" stroke-width="0.8" opacity="0.3">
+          <line x1="200" y1="475" x2="220" y2="468"/>
+          <line x1="220" y1="468" x2="245" y2="480"/>
+          <line x1="245" y1="480" x2="255" y2="470"/>
+          <line x1="245" y1="480" x2="235" y2="495"/>
+          <line x1="235" y1="495" x2="270" y2="490"/>
+          <line x1="200" y1="475" x2="210" y2="490"/>
+        </g>
+        <!-- Monitor stand -->
+        <rect x="198" y="580" width="24" height="20" fill="#0a1220"/>
+        <rect x="180" y="598" width="60" height="6" rx="2" fill="#0a1220"/>
+        <!-- Keyboard -->
+        <rect x="115" y="595" width="150" height="30" rx="4" fill="#0c1525"/>
+        <g fill="#ffffff" opacity="0.12">
+          <rect x="120" y="600" width="12" height="8" rx="1"/><rect x="136" y="600" width="12" height="8" rx="1"/>
+          <rect x="152" y="600" width="12" height="8" rx="1"/><rect x="168" y="600" width="12" height="8" rx="1"/>
+          <rect x="184" y="600" width="12" height="8" rx="1"/><rect x="200" y="600" width="12" height="8" rx="1"/>
+          <rect x="216" y="600" width="12" height="8" rx="1"/>
+          <rect x="120" y="612" width="18" height="8" rx="1"/><rect x="142" y="612" width="12" height="8" rx="1"/>
+          <rect x="158" y="612" width="12" height="8" rx="1"/><rect x="174" y="612" width="12" height="8" rx="1"/>
+          <rect x="190" y="612" width="18" height="8" rx="1"/>
+        </g>
+        <!-- Mouse -->
+        <rect x="275" y="598" width="28" height="20" rx="8" fill="#0c1525"/>
+        <!-- Headset person 1 -->
+        <circle cx="165" cy="420" r="32" fill="#1a2c5e"/>
+        <!-- Head -->
+        <circle cx="165" cy="406" r="18" fill="#c8956a"/>
+        <!-- Hair -->
+        <path d="M147,400 Q165,385 183,400 Q183,388 165,386 Q147,388 147,400Z" fill="#2a1a0a"/>
+        <!-- Headset band -->
+        <path d="M147,400 Q165,382 183,400" stroke="#1557c0" stroke-width="5" fill="none"/>
+        <circle cx="147" cy="402" r="6" fill="#1557c0"/>
+        <circle cx="183" cy="402" r="6" fill="#1557c0"/>
+        <!-- Microphone -->
+        <path d="M183,402 Q193,408 190,418" stroke="#888" stroke-width="2.5" fill="none"/>
+        <rect x="188" y="416" width="7" height="5" rx="2" fill="#888"/>
+        <!-- Shoulders/body -->
+        <path d="M133,438 Q145,428 165,426 Q185,428 197,438 L200,460 L130,460Z" fill="#1557c0"/>
+        <!-- Name tag -->
+        <rect x="152" y="438" width="26" height="16" rx="2" fill="white" opacity="0.2"/>
+
+        <!-- Desk 2 (center) -->
+        <rect x="580" y="540" width="280" height="165" rx="4" fill="#0d1830"/>
+        <rect x="580" y="540" width="280" height="8" fill="#e87d1e" opacity="0.5"/>
+        <!-- Monitor 2 - dual screens -->
+        <rect x="590" y="400" width="170" height="148" rx="6" fill="#0a1220" filter="url(#screenGlow)"/>
+        <rect x="594" y="404" width="162" height="140" rx="4" fill="#0e2060"/>
+        <!-- CRM-like screen -->
+        <rect x="598" y="408" width="154" height="132" rx="3" fill="#08122e"/>
+        <!-- Header -->
+        <rect x="598" y="408" width="154" height="22" rx="2" fill="#1557c0" opacity="0.7"/>
+        <rect x="602" y="413" width="60" height="8" rx="2" fill="white" opacity="0.6"/>
+        <!-- Data rows -->
+        <g opacity="0.5">
+          <rect x="602" y="435" width="146" height="8" rx="1" fill="#1e7fe8"/>
+          <rect x="602" y="447" width="100" height="6" rx="1" fill="#ffffff"/>
+          <rect x="602" y="457" width="120" height="6" rx="1" fill="#ffffff"/>
+          <rect x="602" y="467" width="90" height="6" rx="1" fill="#ffffff"/>
+          <rect x="602" y="477" width="110" height="6" rx="1" fill="#ffffff"/>
+          <rect x="602" y="487" width="85" height="6" rx="1" fill="#e87d1e"/>
+          <rect x="602" y="497" width="130" height="6" rx="1" fill="#ffffff"/>
+          <rect x="602" y="507" width="100" height="6" rx="1" fill="#ffffff"/>
+          <rect x="602" y="517" width="118" height="6" rx="1" fill="#1e7fe8"/>
+        </g>
+        <!-- Second monitor -->
+        <rect x="765" y="410" width="80" height="90" rx="4" fill="#0a1220"/>
+        <rect x="769" y="414" width="72" height="82" rx="3" fill="#0e1a3a"/>
+        <g fill="#e87d1e" opacity="0.6">
+          <rect x="773" y="418" width="28" height="6" rx="1"/>
+          <rect x="773" y="428" width="20" height="5" rx="1"/>
+        </g>
+        <!-- Monitor stands -->
+        <rect x="670" y="548" width="20" height="18" fill="#0a1220"/>
+        <rect x="652" y="564" width="56" height="5" rx="2" fill="#0a1220"/>
+        <!-- Headset person 2 -->
+        <circle cx="720" cy="380" r="35" fill="#162450"/>
+        <circle cx="720" cy="364" r="20" fill="#b87850"/>
+        <path d="M700,358 Q720,342 740,358 Q740,345 720,343 Q700,345 700,358Z" fill="#3a2510"/>
+        <path d="M700,358 Q720,340 740,358" stroke="#e87d1e" stroke-width="5" fill="none"/>
+        <circle cx="700" cy="360" r="6" fill="#e87d1e"/>
+        <circle cx="740" cy="360" r="6" fill="#e87d1e"/>
+        <path d="M740,360 Q752,366 748,378" stroke="#888" stroke-width="2.5" fill="none"/>
+        <rect x="746" y="376" width="7" height="5" rx="2" fill="#888"/>
+        <path d="M688,398 Q700,388 720,386 Q740,388 752,398 L756,420 L684,420Z" fill="#e87d1e"/>
+        <!-- Speech bubble -->
+        <rect x="756" y="328" width="120" height="44" rx="8" fill="#1557c0" opacity="0.9"/>
+        <polygon points="760,372 748,385 772,372" fill="#1557c0" opacity="0.9"/>
+        <rect x="764" y="336" width="70" height="6" rx="2" fill="white" opacity="0.8"/>
+        <rect x="764" y="346" width="90" height="5" rx="2" fill="white" opacity="0.5"/>
+        <rect x="764" y="356" width="60" height="5" rx="2" fill="white" opacity="0.5"/>
+
+        <!-- Desk 3 (right) -->
+        <rect x="1080" y="560" width="280" height="148" rx="4" fill="#0d1830"/>
+        <rect x="1080" y="560" width="280" height="8" fill="#1557c0" opacity="0.5"/>
+        <!-- Monitor 3 -->
+        <rect x="1110" y="430" width="200" height="138" rx="6" fill="#0a1220" filter="url(#screenGlow)"/>
+        <rect x="1114" y="434" width="192" height="130" rx="4" fill="#0e2060"/>
+        <!-- Dashboard content -->
+        <rect x="1118" y="438" width="184" height="122" rx="3" fill="#081228"/>
+        <!-- Status indicators -->
+        <g>
+          <circle cx="1130" cy="448" r="6" fill="#22dd66"/>
+          <rect x="1142" y="444" width="80" height="8" rx="2" fill="white" opacity="0.4"/>
+          <circle cx="1130" cy="466" r="6" fill="#e87d1e"/>
+          <rect x="1142" y="462" width="65" height="8" rx="2" fill="white" opacity="0.4"/>
+          <circle cx="1130" cy="484" r="6" fill="#1e7fe8"/>
+          <rect x="1142" y="480" width="90" height="8" rx="2" fill="white" opacity="0.4"/>
+          <circle cx="1130" cy="502" r="6" fill="#22dd66"/>
+          <rect x="1142" y="498" width="75" height="8" rx="2" fill="white" opacity="0.4"/>
+        </g>
+        <!-- Donut chart -->
+        <circle cx="1260" cy="490" r="38" fill="none" stroke="#1557c0" stroke-width="14" stroke-dasharray="160 80"/>
+        <circle cx="1260" cy="490" r="38" fill="none" stroke="#e87d1e" stroke-width="14" stroke-dasharray="80 160" stroke-dashoffset="-160"/>
+        <circle cx="1260" cy="490" r="22" fill="#081228"/>
+        <text x="1260" y="495" font-size="12" fill="white" text-anchor="middle" opacity="0.8">97%</text>
+        <!-- Monitor stand -->
+        <rect x="1198" y="568" width="24" height="18" fill="#0a1220"/>
+        <rect x="1180" y="584" width="60" height="5" rx="2" fill="#0a1220"/>
+        <!-- Headset person 3 -->
+        <circle cx="1165" cy="410" r="32" fill="#1a2c5e"/>
+        <circle cx="1165" cy="396" r="18" fill="#c8956a"/>
+        <path d="M1147,390 Q1165,375 1183,390 Q1183,378 1165,376 Q1147,378 1147,390Z" fill="#1a0a0a"/>
+        <path d="M1147,390 Q1165,373 1183,390" stroke="#1557c0" stroke-width="5" fill="none"/>
+        <circle cx="1147" cy="392" r="6" fill="#1557c0"/>
+        <circle cx="1183" cy="392" r="6" fill="#1557c0"/>
+        <path d="M1147,392 Q1137,398 1140,408" stroke="#888" stroke-width="2.5" fill="none"/>
+        <rect x="1134" y="406" width="7" height="5" rx="2" fill="#888"/>
+        <path d="M1133,428 Q1145,418 1165,416 Q1185,418 1197,428 L1200,450 L1130,450Z" fill="#0d3080"/>
+
+        <!-- Large background screen on wall -->
+        <rect x="380" y="30" width="680" height="320" rx="8" fill="#060e20" filter="url(#screenGlow)"/>
+        <rect x="386" y="36" width="668" height="308" rx="6" fill="#0a1535"/>
+        <!-- World/India map on big screen -->
+        <rect x="390" y="40" width="660" height="300" rx="4" fill="#081228"/>
+        <!-- Map grid lines -->
+        <g stroke="#1e7fe8" stroke-width="0.5" opacity="0.2">
+          <line x1="390" y1="100" x2="1050" y2="100"/><line x1="390" y1="160" x2="1050" y2="160"/>
+          <line x1="390" y1="220" x2="1050" y2="220"/><line x1="390" y1="280" x2="1050" y2="280"/>
+          <line x1="500" y1="40" x2="500" y2="340"/><line x1="610" y1="40" x2="610" y2="340"/>
+          <line x1="720" y1="40" x2="720" y2="340"/><line x1="830" y1="40" x2="830" y2="340"/>
+          <line x1="940" y1="40" x2="940" y2="340"/>
+        </g>
+        <!-- India map outline (simplified) -->
+        <polygon points="650,80 700,70 750,75 800,90 830,120 840,160 820,200 790,240 760,280 740,310 720,320 700,310 680,280 660,240 640,200 620,160 630,120" 
+          fill="none" stroke="#1e7fe8" stroke-width="2" opacity="0.6"/>
+        <polygon points="650,80 700,70 750,75 800,90 830,120 840,160 820,200 790,240 760,280 740,310 720,320 700,310 680,280 660,240 640,200 620,160 630,120" 
+          fill="#1557c0" opacity="0.12"/>
+        <!-- City nodes on map -->
+        <g filter="url(#screenGlow)">
+          <circle cx="720" cy="100" r="5" fill="#e87d1e"/><text x="728" y="103" font-size="9" fill="white" opacity="0.8">Delhi</text>
+          <circle cx="760" cy="195" r="5" fill="#e87d1e"/><text x="768" y="198" font-size="9" fill="white" opacity="0.8">Mumbai</text>
+          <circle cx="770" cy="250" r="5" fill="#e87d1e"/><text x="778" y="253" font-size="9" fill="white" opacity="0.8">Bangalore</text>
+          <circle cx="810" cy="180" r="4" fill="#1e7fe8"/>
+          <circle cx="730" cy="160" r="4" fill="#1e7fe8"/>
+          <circle cx="750" cy="140" r="4" fill="#1e7fe8"/>
+          <circle cx="700" cy="210" r="4" fill="#1e7fe8"/>
+          <circle cx="785" cy="145" r="4" fill="#1e7fe8"/>
+        </g>
+        <!-- Connection lines between cities -->
+        <g stroke="#e87d1e" stroke-width="1.5" opacity="0.5" stroke-dasharray="6,4">
+          <line x1="720" y1="100" x2="760" y2="195"/>
+          <line x1="760" y1="195" x2="770" y2="250"/>
+          <line x1="720" y1="100" x2="785" y2="145"/>
+          <line x1="760" y1="195" x2="730" y2="160"/>
+          <line x1="760" y1="195" x2="810" y2="180"/>
+        </g>
+        <!-- Screen title -->
+        <text x="720" y="58" font-family="Arial, sans-serif" font-size="12" fill="#1e7fe8" text-anchor="middle" opacity="0.8" letter-spacing="2">RTCPL LIVE TRACKING DASHBOARD</text>
+        <!-- Screen stats bar -->
+        <rect x="390" y="310" width="660" height="30" rx="0" fill="#0d1a38"/>
+        <g fill="#22dd66" opacity="0.7" font-family="Arial" font-size="10">
+          <text x="410" y="330">● 14 ACTIVE ROUTES</text>
+        </g>
+        <g fill="#e87d1e" opacity="0.7" font-family="Arial" font-size="10">
+          <text x="590" y="330">● 8 IN TRANSIT</text>
+        </g>
+        <g fill="#1e7fe8" opacity="0.7" font-family="Arial" font-size="10">
+          <text x="730" y="330">● 97% ON-TIME</text>
+        </g>
+        <g fill="#ffffff" opacity="0.4" font-family="Arial" font-size="10">
+          <text x="870" y="330">● PAN INDIA COVERAGE</text>
+        </g>
+        <!-- Screen stand -->
+        <rect x="680" y="350" width="80" height="16" fill="#0a1220"/>
+        <rect x="650" y="364" width="140" height="8" rx="2" fill="#0a1220"/>
+
+        <!-- Floating notification bubbles -->
+        <rect x="900" y="160" width="140" height="52" rx="8" fill="#1557c0" opacity="0.85"/>
+        <text x="912" y="180" font-family="Arial" font-size="10" fill="white" opacity="0.9">📦 Shipment Delivered</text>
+        <text x="912" y="196" font-family="Arial" font-size="9" fill="rgba(255,255,255,0.6)">Mumbai → Delhi • Just now</text>
+        <text x="912" y="208" font-family="Arial" font-size="9" fill="#22dd66">✓ On Time</text>
+
+        <rect x="200" y="240" width="140" height="52" rx="8" fill="#0d3080" opacity="0.85"/>
+        <text x="212" y="260" font-family="Arial" font-size="10" fill="white" opacity="0.9">🚚 New Booking</text>
+        <text x="212" y="276" font-family="Arial" font-size="9" fill="rgba(255,255,255,0.6)">Bangalore → Pune</text>
+        <text x="212" y="288" font-family="Arial" font-size="9" fill="#e87d1e">FTL • 12 Tonnes</text>
+      </svg>
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <div class="slide-tag">📞 Customer Support</div>
+        <h1 class="slide-title">24/7 Responsive<br><em>Support</em><br>Team</h1>
+        <p class="slide-desc">Our dedicated customer service team tracks every shipment in real-time — always available, always responsive, always committed.</p>
+        <div class="slide-btns">
+          <a href="tel:9241537213" class="btn-primary">📞 Call Now</a>
+          <a href="#contact" class="btn-secondary">Send Enquiry</a>
+        </div>
+      </div>
+      <div class="slide-stats">
+        <div class="stat-pill"><div class="sp-num">97%</div><div class="sp-lbl">On-Time<br>Rate</div></div>
+        <div class="stat-pill"><div class="sp-num">24/7</div><div class="sp-lbl">Customer<br>Support</div></div>
+        <div class="stat-pill"><div class="sp-num">14+</div><div class="sp-lbl">Trusted<br>Clients</div></div>
+      </div>
+    </div>
+
+  </div><!-- /slider-track -->
+
+  <!-- Controls -->
+  <button class="slider-arrow slider-prev" onclick="changeSlide(-1)" aria-label="Previous">&#8592;</button>
+  <button class="slider-arrow slider-next" onclick="changeSlide(1)" aria-label="Next">&#8594;</button>
+  <div class="slider-dots" id="sliderDots">
+    <div class="dot active" onclick="goToSlide(0)"></div>
+    <div class="dot" onclick="goToSlide(1)"></div>
+    <div class="dot" onclick="goToSlide(2)"></div>
+  </div>
+  <div class="slide-counter"><span id="currentSlideNum">1</span> / 3</div>
+  <div class="slider-progress" id="sliderProgress"></div>
+</section>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="section-inner">
+    <div class="overview-grid fade-up">
+      <div class="overview-text">
+        <div class="section-label">Company Overview</div>
+        <h2 class="section-title">Your Trusted Logistics Partner</h2>
+        <div class="divider"></div>
+        <p>Relieve Transport Company Pvt. Ltd. (RTCPL) is a professionally managed logistics and transportation company, proudly serving customers across India for over 16 years.</p>
+        <p>We have built a strong reputation as a reliable, service-driven, and customer-focused logistics partner — delivering consistent performance in domestic transportation through our PAN India network.</p>
+        <p>Our core belief: <strong>long-term success in logistics is achieved through trust, transparency, and committed service.</strong></p>
+        <div class="overview-highlights">
+          <div class="highlight-item">
+            <div class="highlight-icon">🤝</div>
+            <div>
+              <h4>Customer-Centric Approach</h4>
+              <p>Tailor-made solutions to ensure timely delivery, cargo safety, and complete satisfaction.</p>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon">🔒</div>
+            <div>
+              <h4>Trust & Transparency</h4>
+              <p>Every movement guided by commitment to honesty and accountability.</p>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon">🌐</div>
+            <div>
+              <h4>PAN India Network</h4>
+              <p>Experienced manpower covering metros, industrial hubs, and tier-2/3 cities.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="overview-visual">
+        <div class="ov-title">RTCPL at a Glance</div>
+        <div class="ov-sub">Relieve Transport Company Pvt. Ltd.</div>
+        <div class="ov-stats">
+          <div class="ov-stat"><div class="n">16+</div><div class="l">Years Active</div></div>
+          <div class="ov-stat"><div class="n">FTL</div><div class="l">Full Truck Load</div></div>
+          <div class="ov-stat"><div class="n">PTL</div><div class="l">Part Truck Load</div></div>
+          <div class="ov-stat"><div class="n">100%</div><div class="l">Committed</div></div>
+        </div>
+        <div class="ov-philosophy">"We believe that long-term success in logistics is achieved through trust, transparency, and committed service — and this belief guides every movement we handle."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner">
+    <div class="fade-up">
+      <div class="section-label">What We Offer</div>
+      <h2 class="section-title">Our Services</h2>
+      <div class="divider"></div>
+      <p class="section-desc">End-to-end logistics solutions customised for your business — from full truck loads to fleet solutions across India.</p>
+    </div>
+    <div class="services-grid fade-up">
+      <div class="service-card">
+        <div class="service-icon">🚚</div>
+        <h3>PAN India Pickup & Delivery</h3>
+        <p>End-to-end pickup and delivery covering metros, industrial hubs, tier-2 & tier-3 cities, and remote locations across India.</p>
+        <ul class="service-list">
+          <li>Complete geographical coverage</li>
+          <li>Metros to remote locations</li>
+          <li>Industrial hub connectivity</li>
+          <li>Tier-2 & Tier-3 cities</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📦</div>
+        <h3>Full Truck Load (FTL)</h3>
+        <p>Dedicated vehicles for bulk and high-volume cargo ensuring faster transit with maximum safety and accountability.</p>
+        <ul class="service-list">
+          <li>Dedicated vehicles for bulk cargo</li>
+          <li>Faster transit, minimum handling</li>
+          <li>Better cargo safety & accountability</li>
+          <li>Ideal for high-value shipments</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🚛</div>
+        <h3>Part Truck Load (PTL)</h3>
+        <p>Cost-effective consolidated logistics for smaller consignments with optimised routing and reliable delivery schedules.</p>
+        <ul class="service-list">
+          <li>Cost-effective for small consignments</li>
+          <li>Consolidated & optimized routing</li>
+          <li>Reliable delivery schedules</li>
+          <li>Consistent service quality</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏭</div>
+        <h3>Inward & Outward Movements</h3>
+        <p>Efficiently managing both inbound and outbound transportation for factories, warehouses, distributors, and project locations.</p>
+        <ul class="service-list">
+          <li>Factory inbound & outbound</li>
+          <li>Warehouse logistics</li>
+          <li>Distributor supply chains</li>
+          <li>Project location transport</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🚐</div>
+        <h3>Fleet & Vehicle Solutions</h3>
+        <p>Flexible fleet provisioning for customers and transport companies — vehicles customised to your operational needs.</p>
+        <ul class="service-list">
+          <li>Vehicle provisioning to clients</li>
+          <li>Transport company solutions</li>
+          <li>Flexible fleet sizes</li>
+          <li>Operational customization</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏗</div>
+        <h3>Project & Event Shipments</h3>
+        <p>Specialized logistics for event and project-based shipments requiring precise coordination and timely execution.</p>
+        <ul class="service-list">
+          <li>Event logistics management</li>
+          <li>Project cargo coordination</li>
+          <li>Time-critical deliveries</li>
+          <li>Special handling & care</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section id="industries">
+  <div class="section-inner">
+    <div class="fade-up">
+      <div class="section-label">Sectors We Serve</div>
+      <h2 class="section-title">Industries We Serve</h2>
+      <div class="divider"></div>
+      <p class="section-desc" style="color:rgba(255,255,255,0.65)">RTCPL provides specialised logistics across diverse industries, understanding the unique supply chain needs of each sector.</p>
+    </div>
+    <div class="industries-grid fade-up">
+      <div class="industry-card">
+        <div class="ind-icon">🛒</div>
+        <div class="ind-text">
+          <h4>FMCG & Consumer Goods</h4>
+          <p>Fast-moving inventory requiring speed and consistency at scale.</p>
+        </div>
+      </div>
+      <div class="industry-card">
+        <div class="ind-icon">⚙️</div>
+        <div class="ind-text">
+          <h4>Manufacturing & Engineering</h4>
+          <p>Heavy and precision cargo handled with care and expertise.</p>
+        </div>
+      </div>
+      <div class="industry-card">
+        <div class="ind-icon">💊</div>
+        <div class="ind-text">
+          <h4>Pharmaceuticals</h4>
+          <p>Compliant, temperature-aware logistics for healthcare supply chains.</p>
+        </div>
+      </div>
+      <div class="industry-card">
+        <div class="ind-icon">🏪</div>
+        <div class="ind-text">
+          <h4>Retail & Distribution</h4>
+          <p>Nationwide distribution network powering retail supply chains.</p>
+        </div>
+      </div>
+      <div class="industry-card">
+        <div class="ind-icon">🖥️</div>
+        <div class="ind-text">
+          <h4>Electronics & Electricals</h4>
+          <p>Secure, damage-free transport for sensitive electronic goods.</p>
+        </div>
+      </div>
+      <div class="industry-card">
+        <div class="ind-icon">🎯</div>
+        <div class="ind-text">
+          <h4>Event & Project Shipments</h4>
+          <p>Coordinated logistics for events, exhibitions, and project sites.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE -->
+<section id="why">
+  <div class="section-inner">
+    <div class="why-grid">
+      <div>
+        <div class="section-label fade-up">Why RTCPL</div>
+        <h2 class="section-title fade-up">Why Choose Us?</h2>
+        <div class="divider fade-up"></div>
+        <div class="why-reasons fade-up">
+          <div class="why-item">
+            <div class="why-num">01</div>
+            <div>
+              <h4>16+ Years of Trusted Experience</h4>
+              <p>Over a decade and a half of operational excellence, building lasting relationships with reputed businesses across India.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-num">02</div>
+            <div>
+              <h4>Strong PAN India Network</h4>
+              <p>Robust pickup and delivery capability spanning metros, industrial zones, and tier-2/3 cities nationwide.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-num">03</div>
+            <div>
+              <h4>FTL & PTL Expertise</h4>
+              <p>Whether you need a full dedicated truck or consolidated part load — we have the right solution for your cargo size.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-num">04</div>
+            <div>
+              <h4>Consistent Quality & Timelines</h4>
+              <p>Service quality that never wavers — committed timelines backed by experienced teams and proven processes.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-num">05</div>
+            <div>
+              <h4>Customer-Centric Support</h4>
+              <p>Responsive, proactive support focused on your satisfaction — every query addressed promptly and professionally.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-num">06</div>
+            <div>
+              <h4>Long-Term Partnership Focus</h4>
+              <p>We don't just move cargo — we build lasting partnerships grounded in trust, transparency, and mutual growth.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fade-up">
+        <div class="why-cta-panel">
+          <h3>Ready to <span>Ship</span> With Confidence?</h3>
+          <p>Join the growing list of India's leading businesses that trust RTCPL for their logistics needs. Get in touch and let's build a reliable supply chain together.</p>
+          <div class="contact-detail">
+            <span class="ico">📞</span>
+            <div>
+              <div style="font-size:11px;opacity:0.6;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px">Call Us</div>
+              <a href="tel:9241537213" style="color:white;text-decoration:none;font-weight:600">9241537213</a>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <span class="ico">📧</span>
+            <div>
+              <div style="font-size:11px;opacity:0.6;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px">Email Us</div>
+              <a href="mailto:bng@rtcpl.in" style="color:white;text-decoration:none;font-weight:600">bng@rtcpl.in</a>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <span class="ico">🌐</span>
+            <div>
+              <div style="font-size:11px;opacity:0.6;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px">Website</div>
+              <a href="http://www.rtcpl.in" target="_blank" style="color:white;text-decoration:none;font-weight:600">www.rtcpl.in</a>
+            </div>
+          </div>
+          <a href="#contact" class="btn-primary" style="width:100%;justify-content:center;margin-top:16px;text-decoration:none;display:flex">Get a Free Quote →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CUSTOMERS -->
+<section id="customers">
+  <div class="section-inner">
+    <div class="customers-intro fade-up">
+      <div>
+        <div class="section-label">Our Clientele</div>
+        <h2 class="section-title">Valued Customers</h2>
+        <div class="divider"></div>
+        <p class="section-desc">Trusted by some of India's most reputed companies across manufacturing, engineering, FMCG, and technology sectors.</p>
+      </div>
+      <div style="background:var(--gray-light);border-radius:16px;padding:24px 28px;">
+        <p style="font-size:15px;line-height:1.75;color:var(--text-body)">Our 16+ years of consistent delivery has earned us long-term relationships with industry leaders. Our proven record of customer satisfaction and repeat business reflects our commitment to operational excellence.</p>
+        <div style="margin-top:16px;display:flex;gap:24px;flex-wrap:wrap;">
+          <div style="text-align:center;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--blue-mid)">14<span style="color:var(--orange)">+</span></div>
+            <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-body)">Major Clients</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--blue-mid)">100<span style="color:var(--orange)">%</span></div>
+            <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-body)">Repeat Business</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="customer-grid fade-up">
+      <div class="customer-card"><span class="c-icon">🏭</span>Dakshin Foundry Pvt. Ltd.</div>
+      <div class="customer-card"><span class="c-icon">⚡</span>GE Triveni Ltd.</div>
+      <div class="customer-card"><span class="c-icon">💧</span>Ion Exchange (India) Ltd.</div>
+      <div class="customer-card"><span class="c-icon">🔧</span>Makita India Pvt. Ltd.</div>
+      <div class="customer-card"><span class="c-icon">🚗</span>Mitsubishi Motors</div>
+      <div class="customer-card"><span class="c-icon">🖥️</span>Rittal India Pvt. Ltd.</div>
+      <div class="customer-card"><span class="c-icon">⚙️</span>Shri Venkateshwara Engineering</div>
+      <div class="customer-card"><span class="c-icon">🏠</span>IFB Industries Ltd.</div>
+      <div class="customer-card"><span class="c-icon">🧪</span>Kimberlite Chemicals</div>
+      <div class="customer-card"><span class="c-icon">🔨</span>Marvel Technology & Tools Pvt. Ltd.</div>
+      <div class="customer-card"><span class="c-icon">⚡</span>Pace Power Systems Pvt. Ltd.</div>
+      <div class="customer-card"><span class="c-icon">🏢</span>Prince Enterprises</div>
+      <div class="customer-card"><span class="c-icon">💨</span>VTS TF Air Systems Pvt. Ltd.</div>
+      <div class="customer-card"><span class="c-icon">🏗</span>Setner</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-info fade-up">
+        <div class="section-label">Get In Touch</div>
+        <h2 class="section-title">Contact Us</h2>
+        <div class="divider"></div>
+        <p>Ready to discuss your logistics requirements? Our team is here to provide the best transport solutions for your business. Reach out to us today.</p>
+        <div class="contact-cards">
+          <div class="c-card">
+            <div class="c-ico">👤</div>
+            <div>
+              <div class="c-label">Contact Person</div>
+              <div class="c-value">Mr. Deepak Sharma</div>
+            </div>
+          </div>
+          <div class="c-card">
+            <div class="c-ico">📞</div>
+            <div>
+              <div class="c-label">Phone Numbers</div>
+              <div class="c-value">
+                <a href="tel:9900021760">9900021760</a> /
+                <a href="tel:9241537213">9241537213</a> /
+                <a href="tel:9886575017">9886575017</a>
+              </div>
+            </div>
+          </div>
+          <div class="c-card">
+            <div class="c-ico">☎️</div>
+            <div>
+              <div class="c-label">Office Line</div>
+              <div class="c-value"><a href="tel:08025610065">080-25610065</a></div>
+            </div>
+          </div>
+          <div class="c-card">
+            <div class="c-ico">📧</div>
+            <div>
+              <div class="c-label">Email</div>
+              <div class="c-value"><a href="mailto:bng@rtcpl.in">bng@rtcpl.in</a></div>
+            </div>
+          </div>
+          <div class="c-card">
+            <div class="c-ico">🌐</div>
+            <div>
+              <div class="c-label">Website</div>
+              <div class="c-value"><a href="http://www.rtcpl.in" target="_blank">www.rtcpl.in</a></div>
+            </div>
+          </div>
+          <div class="c-card">
+            <div class="c-ico">📍</div>
+            <div>
+              <div class="c-label">Registered Office</div>
+              <div class="c-value" style="font-size:13px">No. 3/1, Ramana Shree Layout, Medahalli, Virgonagar P.O, Bangalore – 560049</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form-side fade-up">
+        <h3>Send Us a Message</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="Full name">
+          </div>
+          <div class="form-group">
+            <label>Company</label>
+            <input type="text" placeholder="Company name">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" placeholder="+91 XXXXX XXXXX">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="your@email.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Service Required</label>
+          <select>
+            <option value="">Select a service</option>
+            <option>PAN India Pickup & Delivery</option>
+            <option>Full Truck Load (FTL)</option>
+            <option>Part Truck Load (PTL)</option>
+            <option>Inward & Outward Movements</option>
+            <option>Fleet & Vehicle Solutions</option>
+            <option>Event & Project Shipments</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell us about your logistics requirements..."></textarea>
+        </div>
+        <button class="btn-submit" onclick="alert('Thank you! We will contact you shortly.')">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="max-width:1200px;margin:0 auto;padding-bottom:32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;">
+    <div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:white;margin-bottom:10px">RT<span style="color:var(--orange)">CPL</span></div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7">Relieve Transport Company Pvt. Ltd.<br>Reliable. Timely. Committed.</div>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--orange);margin-bottom:14px">Services</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:2.2">
+        <div>PAN India Pickup & Delivery</div>
+        <div>Full Truck Load (FTL)</div>
+        <div>Part Truck Load (PTL)</div>
+        <div>Fleet & Vehicle Solutions</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--orange);margin-bottom:14px">Industries</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:2.2">
+        <div>FMCG & Consumer Goods</div>
+        <div>Manufacturing & Engineering</div>
+        <div>Pharmaceuticals</div>
+        <div>Electronics & Electricals</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--orange);margin-bottom:14px">Contact</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:2.2">
+        <div>📞 9241537213</div>
+        <div>📧 bng@rtcpl.in</div>
+        <div>🌐 www.rtcpl.in</div>
+        <div>📍 Bangalore – 560049</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-inner">
+    <div class="footer-logo">RT<span>CPL</span></div>
+    <div class="footer-copy">© 2025 Relieve Transport Company Pvt. Ltd. All rights reserved.</div>
+    <div class="footer-tagline">Reliable. Timely. Committed.</div>
+  </div>
+</footer>
+
+<script>
+  // ── SLIDER ──
+  let current = 0;
+  const total = 3;
+  const INTERVAL = 5000;
+  let timer, progressTimer, progressStart;
+
+  const track = document.getElementById('sliderTrack');
+  const dots = document.querySelectorAll('.dot');
+  const counter = document.getElementById('currentSlideNum');
+  const progressBar = document.getElementById('sliderProgress');
+  const slides = document.querySelectorAll('.slide');
+
+  function goToSlide(n) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (n + total) % total;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+    track.style.transform = `translateX(-${current * 33.3333}%)`;
+    counter.textContent = current + 1;
+    resetProgress();
+  }
+
+  function changeSlide(dir) { goToSlide(current + dir); }
+
+  function resetProgress() {
+    clearInterval(progressTimer);
+    progressBar.style.transition = 'none';
+    progressBar.style.width = '0%';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        progressBar.style.transition = `width ${INTERVAL}ms linear`;
+        progressBar.style.width = '100%';
+      });
+    });
+    clearInterval(timer);
+    timer = setInterval(() => goToSlide(current + 1), INTERVAL);
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') changeSlide(-1);
+    if (e.key === 'ArrowRight') changeSlide(1);
+  });
+
+  // Touch swipe
+  let touchStartX = 0;
+  document.getElementById('hero').addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  document.getElementById('hero').addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+  });
+
+  // Start slider
+  resetProgress();
+
+  // ── MOBILE NAV ──
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+  });
+
+  // ── SCROLL ANIMATIONS ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('.services-grid, .industries-grid, .customer-grid, .why-reasons, .contact-cards').forEach(container => {
+    container.querySelectorAll(':scope > *').forEach((child, i) => {
+      child.style.transitionDelay = (i * 0.07) + 's';
+    });
+  });
+</script>
+</body>
+</html>
